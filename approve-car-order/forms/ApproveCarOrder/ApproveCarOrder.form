@@ -1,0 +1,179 @@
+{
+    "id": "approvecarorder",
+    "schemaVersion": "1.1.0",
+    "name": "ApproveCarOrder",
+    "revision": "1.0",
+    "type": "task",
+    "readOnly": false,
+    "content": [
+        {
+            "id": "car_order_details",
+            "type": "section",
+            "title": "Car Order Details",
+            "content": [
+                {
+                    "id": "car",
+                    "type": "string",
+                    "label": "Car",
+                    "readOnly": false,
+                    "value": "${context.CarOrderCalcFields.car}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "office",
+                    "type": "string",
+                    "label": "Office",
+                    "readOnly": false,
+                    "value": "${context.CarOrderCalcFields.office}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "price",
+                    "type": "string",
+                    "label": "Price",
+                    "readOnly": false,
+                    "value": "${context.CarOrderCalcFields.priceWithCurrencyCode}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "quantity",
+                    "type": "integer",
+                    "label": "Quantity",
+                    "readOnly": false,
+                    "value": "${context.CarOrder.quantity}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "total_price",
+                    "type": "string",
+                    "label": "Total Price",
+                    "readOnly": false,
+                    "value": "${context.CarOrderCalcFields.totalPriceWithCurrencyCode}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "total_local_price",
+                    "type": "string",
+                    "label": "Total Local Price",
+                    "readOnly": false,
+                    "value": "${context.CarOrderCalcFields.totalLocalPriceWithLocalCurrencyCode}",
+                    "constraints": {
+                        "required": false
+                    }
+                }
+            ]
+        },
+        {
+            "id": "history_",
+            "type": "section",
+            "title": "",
+            "content": [
+                {
+                    "id": "history",
+                    "type": "collection",
+                    "title": "History",
+                    "addEnabled": false,
+                    "deleteEnabled": false,
+                    "value": "${context.History}",
+                    "content": [
+                        {
+                            "id": "user",
+                            "type": "string",
+                            "label": "User",
+                            "readOnly": true,
+                            "value": "${item.User}",
+                            "constraints": {
+                                "required": false
+                            }
+                        },
+                        {
+                            "id": "role",
+                            "type": "string",
+                            "label": "Role",
+                            "readOnly": true,
+                            "value": "${item.Role}",
+                            "constraints": {
+                                "required": false
+                            }
+                        },
+                        {
+                            "id": "request_date",
+                            "type": "string",
+                            "label": "Request Date",
+                            "readOnly": true,
+                            "value": "${item.RequestDate}",
+                            "constraints": {
+                                "required": false
+                            }
+                        },
+                        {
+                            "id": "decision",
+                            "type": "string",
+                            "label": "Decision",
+                            "readOnly": true,
+                            "value": "${item.Decision}",
+                            "constraints": {
+                                "required": false
+                            }
+                        },
+                        {
+                            "id": "comment",
+                            "type": "string",
+                            "label": "Comment",
+                            "readOnly": true,
+                            "value": "${item.Comment}",
+                            "constraints": {
+                                "required": false
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "decision",
+            "type": "section",
+            "title": "",
+            "content": [
+                {
+                    "id": "comment",
+                    "type": "string",
+                    "label": "Comment",
+                    "readOnly": false,
+                    "value": "${context.WorkflowDetails.comment}",
+                    "control": {
+                        "type": "TextArea",
+                        "properties": {
+                            "height": "medium"
+                        }
+                    },
+                    "constraints": {
+                        "required": false
+                    }
+                }
+            ]
+        }
+    ],
+    "decisions": [
+        {
+            "id": "approve",
+            "text": "Approve",
+            "decisionType": "positive"
+        },
+        {
+            "id": "reject",
+            "text": "Reject",
+            "decisionType": "negative"
+        }
+    ]
+}
