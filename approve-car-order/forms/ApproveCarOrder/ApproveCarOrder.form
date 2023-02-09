@@ -32,9 +32,9 @@
                     }
                 },
                 {
-                    "id": "price",
+                    "id": "rent",
                     "type": "string",
-                    "label": "Price",
+                    "label": "Rent",
                     "readOnly": false,
                     "value": "${context.CarOrderCalcFields.priceWithCurrencyCode}",
                     "constraints": {

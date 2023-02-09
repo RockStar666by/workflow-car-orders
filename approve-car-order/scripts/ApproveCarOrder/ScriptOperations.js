@@ -14,9 +14,9 @@ if (!$.context.History) {
    $.context.History.push(decision);
    $.context.WorkflowDetails.currentRole = departmentManagerRole;
 
-   var car = $.context.CarOrder.makeID + " " + $.context.CarOrder.modelID;
+   var car = $.context.CarOrder.make + " " + $.context.CarOrder.model;
    var office = $.context.CarOrder.officeCity + " " + $.context.CarOrder.officeStreet;
-   var priceWithCurrencyCode = $.context.CarOrder.price + " " +$.context.CarOrder.CurrencyCode_code;
+   var priceWithCurrencyCode = $.context.CarOrder.rent + " " +$.context.CarOrder.CurrencyCode_code;
    var totalPriceWithCurrencyCode = $.context.CarOrder.totalPrice + " " + $.context.CarOrder.CurrencyCode_code;
    var totalLocalPriceWithLocalCurrencyCode = $.context.CarOrder.totalLocal + " " + $.context.CarOrder.LocalCurrencyCode_code;
    

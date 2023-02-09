@@ -46,11 +46,11 @@
 				"b3c98fd5-5000-4e1a-b3dc-8a4c05015528": {
 					"name": "Change Car Status for Closed"
 				},
-				"3164f76d-c79f-4f1c-abcb-55ee4232fa28": {
-					"name": "Send E-mail with Approval"
+				"a4c0f426-f2d1-4ab5-842c-1a2b43510928": {
+					"name": "Send approval mail"
 				},
-				"e2e5d70c-7d32-4be7-820a-6ac3305d5487": {
-					"name": "Send Email with Rejection"
+				"ce59580a-1896-44c5-a6f7-83e79a45804d": {
+					"name": "Send rejection mail"
 				}
 			},
 			"sequenceFlows": {
@@ -90,11 +90,11 @@
 				"d661dc89-3088-44d0-8ef6-c5ca7cc86803": {
 					"name": "SequenceFlow15"
 				},
-				"861ffe2c-e72f-4728-8cfa-80b82b7dc62b": {
-					"name": "SequenceFlow17"
+				"c6ad7d91-5ea4-4462-9119-b10919be302d": {
+					"name": "SequenceFlow19"
 				},
-				"ee40a3ee-b701-4e84-bc47-8958ad2b3ef8": {
-					"name": "SequenceFlow18"
+				"ecf15449-dc08-43a6-9cfd-db52ba9fe90b": {
+					"name": "SequenceFlow20"
 				}
 			},
 			"diagrams": {
@@ -166,6 +166,40 @@
 			"name": "Department Manager Approval",
 			"default": "1053dcab-d669-4d14-be7b-3ad47b0db806"
 		},
+		"7d201c7d-604b-4b0c-8f25-051e3323bdf6": {
+			"classDefinition": "com.sap.bpm.wfs.ScriptTask",
+			"reference": "/scripts/ApproveCarOrder/PreparePayloadForReject.js",
+			"id": "scripttask3",
+			"name": "Prepare Payload"
+		},
+		"920c82ab-476d-4ae9-834f-e558a0054ae6": {
+			"classDefinition": "com.sap.bpm.wfs.ServiceTask",
+			"destination": "CAP_ORDER_STATUS",
+			"destinationSource": "consumer",
+			"path": "technical/CarOrders/${context.CarOrder.orderUUID}",
+			"httpMethod": "PATCH",
+			"requestVariable": "${context.PayloadUpdateOrderStatus}",
+			"responseVariable": "${context.ResponseUpdateOrderStatus}",
+			"id": "servicetask1",
+			"name": "Change Car Order Status for Rejected"
+		},
+		"9e7a9224-6986-4e6a-bf9d-619c42a8b263": {
+			"classDefinition": "com.sap.bpm.wfs.ScriptTask",
+			"reference": "/scripts/ApproveCarOrder/PreparePayloadForClosed.js",
+			"id": "scripttask4",
+			"name": "Prepare Payload"
+		},
+		"b3c98fd5-5000-4e1a-b3dc-8a4c05015528": {
+			"classDefinition": "com.sap.bpm.wfs.ServiceTask",
+			"destination": "CAP_ORDER_STATUS",
+			"destinationSource": "consumer",
+			"path": "technical/CarOrders/${context.CarOrder.orderUUID}",
+			"httpMethod": "PATCH",
+			"requestVariable": "${context.PayloadUpdateOrderStatus}",
+			"responseVariable": "${context.ResponseUpdateOrderStatus}",
+			"id": "servicetask2",
+			"name": "Change Car Status for Closed"
+		},
 		"c6b99f32-5fe6-4ab6-b60a-80fba1b9ae0f": {
 			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
 			"id": "sequenceflow1",
@@ -224,6 +258,34 @@
 			"sourceRef": "e80bfd40-a836-4cdf-939e-1e8780aeebcf",
 			"targetRef": "9e7a9224-6986-4e6a-bf9d-619c42a8b263"
 		},
+		"e80b4f89-610d-4d4c-95a3-d26770b90cf4": {
+			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
+			"id": "sequenceflow10",
+			"name": "SequenceFlow10",
+			"sourceRef": "7d201c7d-604b-4b0c-8f25-051e3323bdf6",
+			"targetRef": "920c82ab-476d-4ae9-834f-e558a0054ae6"
+		},
+		"bc8b5b72-e428-443a-97e6-7c412e09e576": {
+			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
+			"id": "sequenceflow11",
+			"name": "SequenceFlow11",
+			"sourceRef": "920c82ab-476d-4ae9-834f-e558a0054ae6",
+			"targetRef": "ce59580a-1896-44c5-a6f7-83e79a45804d"
+		},
+		"95f3ae2b-613c-45ee-8d5f-98b436985162": {
+			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
+			"id": "sequenceflow13",
+			"name": "SequenceFlow13",
+			"sourceRef": "9e7a9224-6986-4e6a-bf9d-619c42a8b263",
+			"targetRef": "b3c98fd5-5000-4e1a-b3dc-8a4c05015528"
+		},
+		"d661dc89-3088-44d0-8ef6-c5ca7cc86803": {
+			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
+			"id": "sequenceflow15",
+			"name": "SequenceFlow15",
+			"sourceRef": "b3c98fd5-5000-4e1a-b3dc-8a4c05015528",
+			"targetRef": "a4c0f426-f2d1-4ab5-842c-1a2b43510928"
+		},
 		"42fa7a2d-c526-4a02-b3ba-49b5168ba644": {
 			"classDefinition": "com.sap.bpm.wfs.ui.Diagram",
 			"symbols": {
@@ -251,16 +313,20 @@
 				"728ede5e-4e01-43b3-a4bc-46bc66214a72": {},
 				"393519a7-cc17-4652-a9a2-6c013a952362": {},
 				"ac854a89-1215-4526-b883-1eb1a12fc8d0": {},
-				"752597fd-f055-464f-a265-fbb267eeaae8": {},
-				"c74aa9fb-e404-4e5d-a5b8-087efd318148": {},
-				"43b1f86e-fd9f-4779-a199-1f12410eeba1": {},
-				"c29ff008-3bbd-4461-97ca-f884fb45c048": {}
+				"2b074c4b-8ed3-48c6-99b1-412152fd3afa": {},
+				"2a7b7900-4e54-4c21-9453-3f66d317cd6d": {},
+				"7cc4706f-9aa6-423c-80cd-6956d224203c": {},
+				"ef0e271b-956a-427e-a278-81d796711992": {}
 			}
 		},
 		"894e29a3-d976-4c35-aa3c-d8401359816c": {
 			"classDefinition": "com.sap.bpm.wfs.SampleContext",
 			"reference": "/sample-data/ApproveCarOrder/SampleStartPayload.json",
 			"id": "default-start-context"
+		},
+		"cf82e094-5446-4ba2-9c50-9b2921406a29": {
+			"classDefinition": "com.sap.bpm.wfs.TerminateEventDefinition",
+			"id": "terminateeventdefinition1"
 		},
 		"df898b52-91e1-4778-baad-2ad9a261d30e": {
 			"classDefinition": "com.sap.bpm.wfs.ui.StartEventSymbol",
@@ -378,29 +444,6 @@
 			"targetSymbol": "5f74f6a3-0fa1-4356-b601-4683da11bca7",
 			"object": "a3896fb6-6c8e-4195-8d58-882bc2b6de12"
 		},
-		"62d7f4ed-4063-4c44-af8b-39050bd44926": {
-			"classDefinition": "com.sap.bpm.wfs.LastIDs",
-			"terminateeventdefinition": 1,
-			"maildefinition": 2,
-			"sequenceflow": 18,
-			"startevent": 1,
-			"endevent": 2,
-			"usertask": 1,
-			"servicetask": 2,
-			"scripttask": 5,
-			"mailtask": 3,
-			"exclusivegateway": 2
-		},
-		"cf82e094-5446-4ba2-9c50-9b2921406a29": {
-			"classDefinition": "com.sap.bpm.wfs.TerminateEventDefinition",
-			"id": "terminateeventdefinition1"
-		},
-		"7d201c7d-604b-4b0c-8f25-051e3323bdf6": {
-			"classDefinition": "com.sap.bpm.wfs.ScriptTask",
-			"reference": "/scripts/ApproveCarOrder/PreparePayloadForReject.js",
-			"id": "scripttask3",
-			"name": "Prepare Payload"
-		},
 		"e37c7e31-0f0e-41e3-9e73-0478e12bc193": {
 			"classDefinition": "com.sap.bpm.wfs.ui.ScriptTaskSymbol",
 			"x": 952.1713420541212,
@@ -408,17 +451,6 @@
 			"width": 100,
 			"height": 60,
 			"object": "7d201c7d-604b-4b0c-8f25-051e3323bdf6"
-		},
-		"920c82ab-476d-4ae9-834f-e558a0054ae6": {
-			"classDefinition": "com.sap.bpm.wfs.ServiceTask",
-			"destination": "CAP_ORDER_STATUS",
-			"destinationSource": "consumer",
-			"path": "technical/CarOrders/${context.CarOrder.orderUUID}",
-			"httpMethod": "PATCH",
-			"requestVariable": "${context.PayloadUpdateOrderStatus}",
-			"responseVariable": "${context.ResponseUpdateOrderStatus}",
-			"id": "servicetask1",
-			"name": "Change Car Order Status for Rejected"
 		},
 		"c9e11741-0c84-4df0-8c04-1407eeec96c3": {
 			"classDefinition": "com.sap.bpm.wfs.ui.ServiceTaskSymbol",
@@ -428,13 +460,6 @@
 			"height": 60,
 			"object": "920c82ab-476d-4ae9-834f-e558a0054ae6"
 		},
-		"e80b4f89-610d-4d4c-95a3-d26770b90cf4": {
-			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
-			"id": "sequenceflow10",
-			"name": "SequenceFlow10",
-			"sourceRef": "7d201c7d-604b-4b0c-8f25-051e3323bdf6",
-			"targetRef": "920c82ab-476d-4ae9-834f-e558a0054ae6"
-		},
 		"e7d98638-c853-428f-be31-6cfd9859ec22": {
 			"classDefinition": "com.sap.bpm.wfs.ui.SequenceFlowSymbol",
 			"points": "1002.1713420541212,214.453125 1152.1713420541212,214.453125",
@@ -442,25 +467,12 @@
 			"targetSymbol": "c9e11741-0c84-4df0-8c04-1407eeec96c3",
 			"object": "e80b4f89-610d-4d4c-95a3-d26770b90cf4"
 		},
-		"bc8b5b72-e428-443a-97e6-7c412e09e576": {
-			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
-			"id": "sequenceflow11",
-			"name": "SequenceFlow11",
-			"sourceRef": "920c82ab-476d-4ae9-834f-e558a0054ae6",
-			"targetRef": "e2e5d70c-7d32-4be7-820a-6ac3305d5487"
-		},
 		"611e67af-9a5d-4691-aed5-1b276d744d36": {
 			"classDefinition": "com.sap.bpm.wfs.ui.SequenceFlowSymbol",
-			"points": "1152.1713420541212,215.2265625 1286.9213420541212,215.2265625",
+			"points": "1152.1713420541212,214.453125 1286.9213420541212,214.453125",
 			"sourceSymbol": "c9e11741-0c84-4df0-8c04-1407eeec96c3",
-			"targetSymbol": "43b1f86e-fd9f-4779-a199-1f12410eeba1",
+			"targetSymbol": "7cc4706f-9aa6-423c-80cd-6956d224203c",
 			"object": "bc8b5b72-e428-443a-97e6-7c412e09e576"
-		},
-		"9e7a9224-6986-4e6a-bf9d-619c42a8b263": {
-			"classDefinition": "com.sap.bpm.wfs.ScriptTask",
-			"reference": "/scripts/ApproveCarOrder/PreparePayloadForClosed.js",
-			"id": "scripttask4",
-			"name": "Prepare Payload"
 		},
 		"5f74f6a3-0fa1-4356-b601-4683da11bca7": {
 			"classDefinition": "com.sap.bpm.wfs.ui.ScriptTaskSymbol",
@@ -470,30 +482,12 @@
 			"height": 60,
 			"object": "9e7a9224-6986-4e6a-bf9d-619c42a8b263"
 		},
-		"95f3ae2b-613c-45ee-8d5f-98b436985162": {
-			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
-			"id": "sequenceflow13",
-			"name": "SequenceFlow13",
-			"sourceRef": "9e7a9224-6986-4e6a-bf9d-619c42a8b263",
-			"targetRef": "b3c98fd5-5000-4e1a-b3dc-8a4c05015528"
-		},
 		"728ede5e-4e01-43b3-a4bc-46bc66214a72": {
 			"classDefinition": "com.sap.bpm.wfs.ui.SequenceFlowSymbol",
 			"points": "995.1713420541212,9.21484375 1156.3356710270605,9.21484375",
 			"sourceSymbol": "5f74f6a3-0fa1-4356-b601-4683da11bca7",
 			"targetSymbol": "393519a7-cc17-4652-a9a2-6c013a952362",
 			"object": "95f3ae2b-613c-45ee-8d5f-98b436985162"
-		},
-		"b3c98fd5-5000-4e1a-b3dc-8a4c05015528": {
-			"classDefinition": "com.sap.bpm.wfs.ServiceTask",
-			"destination": "CAP_ORDER_STATUS",
-			"destinationSource": "consumer",
-			"path": "technical/CarOrders/${context.CarOrder.orderUUID}",
-			"httpMethod": "PATCH",
-			"requestVariable": "${context.PayloadUpdateOrderStatus}",
-			"responseVariable": "${context.ResponseUpdateOrderStatus}",
-			"id": "servicetask2",
-			"name": "Change Car Status for Closed"
 		},
 		"393519a7-cc17-4652-a9a2-6c013a952362": {
 			"classDefinition": "com.sap.bpm.wfs.ui.ServiceTaskSymbol",
@@ -503,92 +497,99 @@
 			"height": 60,
 			"object": "b3c98fd5-5000-4e1a-b3dc-8a4c05015528"
 		},
-		"d661dc89-3088-44d0-8ef6-c5ca7cc86803": {
-			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
-			"id": "sequenceflow15",
-			"name": "SequenceFlow15",
-			"sourceRef": "b3c98fd5-5000-4e1a-b3dc-8a4c05015528",
-			"targetRef": "3164f76d-c79f-4f1c-abcb-55ee4232fa28"
-		},
 		"ac854a89-1215-4526-b883-1eb1a12fc8d0": {
 			"classDefinition": "com.sap.bpm.wfs.ui.SequenceFlowSymbol",
-			"points": "1156.3356710270605,8.857421875 1291.4178355135302,8.857421875",
+			"points": "1156.3356710270605,8.857421875 1308.9178355135302,8.857421875",
 			"sourceSymbol": "393519a7-cc17-4652-a9a2-6c013a952362",
-			"targetSymbol": "752597fd-f055-464f-a265-fbb267eeaae8",
+			"targetSymbol": "2b074c4b-8ed3-48c6-99b1-412152fd3afa",
 			"object": "d661dc89-3088-44d0-8ef6-c5ca7cc86803"
 		},
-		"3164f76d-c79f-4f1c-abcb-55ee4232fa28": {
+		"62d7f4ed-4063-4c44-af8b-39050bd44926": {
+			"classDefinition": "com.sap.bpm.wfs.LastIDs",
+			"terminateeventdefinition": 1,
+			"maildefinition": 4,
+			"sequenceflow": 20,
+			"startevent": 1,
+			"endevent": 2,
+			"usertask": 1,
+			"servicetask": 2,
+			"scripttask": 5,
+			"mailtask": 5,
+			"exclusivegateway": 2
+		},
+		"a4c0f426-f2d1-4ab5-842c-1a2b43510928": {
 			"classDefinition": "com.sap.bpm.wfs.MailTask",
 			"destinationSource": "consumer",
-			"id": "mailtask2",
-			"name": "Send E-mail with Approval",
-			"mailDefinitionRef": "a8db221f-b40e-4397-aec5-c8f1b94ad73a"
+			"id": "mailtask4",
+			"name": "Send approval mail",
+			"mailDefinitionRef": "75ac466c-c058-43f8-9dda-f386a04c227f"
 		},
-		"752597fd-f055-464f-a265-fbb267eeaae8": {
+		"2b074c4b-8ed3-48c6-99b1-412152fd3afa": {
 			"classDefinition": "com.sap.bpm.wfs.ui.MailTaskSymbol",
-			"x": 1241.4178355135302,
+			"x": 1258.9178355135302,
 			"y": -21.26171875,
 			"width": 100,
 			"height": 60,
-			"object": "3164f76d-c79f-4f1c-abcb-55ee4232fa28"
+			"object": "a4c0f426-f2d1-4ab5-842c-1a2b43510928"
 		},
-		"861ffe2c-e72f-4728-8cfa-80b82b7dc62b": {
+		"c6ad7d91-5ea4-4462-9119-b10919be302d": {
 			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
-			"id": "sequenceflow17",
-			"name": "SequenceFlow17",
-			"sourceRef": "3164f76d-c79f-4f1c-abcb-55ee4232fa28",
+			"id": "sequenceflow19",
+			"name": "SequenceFlow19",
+			"sourceRef": "a4c0f426-f2d1-4ab5-842c-1a2b43510928",
 			"targetRef": "2798f4e7-bc42-4fad-a248-159095a2f40a"
 		},
-		"c74aa9fb-e404-4e5d-a5b8-087efd318148": {
+		"2a7b7900-4e54-4c21-9453-3f66d317cd6d": {
 			"classDefinition": "com.sap.bpm.wfs.ui.SequenceFlowSymbol",
-			"points": "1291.4178355135302,8.619140625 1428.5,8.619140625",
-			"sourceSymbol": "752597fd-f055-464f-a265-fbb267eeaae8",
+			"points": "1308.9178355135302,8.619140625 1428.5,8.619140625",
+			"sourceSymbol": "2b074c4b-8ed3-48c6-99b1-412152fd3afa",
 			"targetSymbol": "53e54950-7757-4161-82c9-afa7e86cff2c",
-			"object": "861ffe2c-e72f-4728-8cfa-80b82b7dc62b"
+			"object": "c6ad7d91-5ea4-4462-9119-b10919be302d"
 		},
-		"a8db221f-b40e-4397-aec5-c8f1b94ad73a": {
+		"75ac466c-c058-43f8-9dda-f386a04c227f": {
 			"classDefinition": "com.sap.bpm.wfs.MailDefinition",
-			"to": "artsiom_sauchuk@epam.com",
-			"subject": "Successful Order!",
+			"name": "maildefinition3",
+			"to": "savchuk799@gmail.com",
+			"subject": "Order Approval",
 			"reference": "/webcontent/ApproveCarOrder/SuccessfulOrderEmail.html",
-			"id": "maildefinition1"
+			"id": "maildefinition3"
 		},
-		"e2e5d70c-7d32-4be7-820a-6ac3305d5487": {
+		"ce59580a-1896-44c5-a6f7-83e79a45804d": {
 			"classDefinition": "com.sap.bpm.wfs.MailTask",
 			"destinationSource": "consumer",
-			"id": "mailtask3",
-			"name": "Send Email with Rejection",
-			"mailDefinitionRef": "0d2b79a2-7605-4cd0-960b-8aaef803106d"
+			"id": "mailtask5",
+			"name": "Send rejection mail",
+			"mailDefinitionRef": "40a412dd-7a47-46ab-8f92-0e3985e0908d"
 		},
-		"43b1f86e-fd9f-4779-a199-1f12410eeba1": {
+		"7cc4706f-9aa6-423c-80cd-6956d224203c": {
 			"classDefinition": "com.sap.bpm.wfs.ui.MailTaskSymbol",
 			"x": 1236.9213420541212,
-			"y": 186,
+			"y": 184.453125,
 			"width": 100,
 			"height": 60,
-			"object": "e2e5d70c-7d32-4be7-820a-6ac3305d5487"
+			"object": "ce59580a-1896-44c5-a6f7-83e79a45804d"
 		},
-		"ee40a3ee-b701-4e84-bc47-8958ad2b3ef8": {
+		"ecf15449-dc08-43a6-9cfd-db52ba9fe90b": {
 			"classDefinition": "com.sap.bpm.wfs.SequenceFlow",
-			"id": "sequenceflow18",
-			"name": "SequenceFlow18",
-			"sourceRef": "e2e5d70c-7d32-4be7-820a-6ac3305d5487",
+			"id": "sequenceflow20",
+			"name": "SequenceFlow20",
+			"sourceRef": "ce59580a-1896-44c5-a6f7-83e79a45804d",
 			"targetRef": "10dc6039-bcce-497c-9706-82d5b3ab6218"
 		},
-		"c29ff008-3bbd-4461-97ca-f884fb45c048": {
+		"ef0e271b-956a-427e-a278-81d796711992": {
 			"classDefinition": "com.sap.bpm.wfs.ui.SequenceFlowSymbol",
-			"points": "1286.9213420541212,215.2265625 1388.6713420541212,215.2265625",
-			"sourceSymbol": "43b1f86e-fd9f-4779-a199-1f12410eeba1",
+			"points": "1286.9213420541212,214.453125 1388.6713420541212,214.453125",
+			"sourceSymbol": "7cc4706f-9aa6-423c-80cd-6956d224203c",
 			"targetSymbol": "73bfa757-e343-4c7d-bedb-702ede020675",
-			"object": "ee40a3ee-b701-4e84-bc47-8958ad2b3ef8"
+			"object": "ecf15449-dc08-43a6-9cfd-db52ba9fe90b"
 		},
-		"0d2b79a2-7605-4cd0-960b-8aaef803106d": {
+		"40a412dd-7a47-46ab-8f92-0e3985e0908d": {
 			"classDefinition": "com.sap.bpm.wfs.MailDefinition",
-			"name": "maildefinition2",
-			"to": "artsiom_sauchuk@epam.com",
-			"subject": "Order Rejected",
+			"name": "maildefinition4",
+			"to": "savchuk799@gmail.com",
+			"subject": "Order rejected",
 			"reference": "/webcontent/ApproveCarOrder/RejectedOrderEmail.html",
-			"id": "maildefinition2"
+			"id": "maildefinition4"
 		}
 	}
 }
