@@ -16,8 +16,8 @@
     </head>
     <body>
         <h3>Car order rejected</h3>
-        <p>Dear ${context.initiatorName},</p>
-        <p>Your order was rejected</p>
+        <p>Dear ${context.Client.value[0].firstName} ${context.Client.value[0].lastName},</p>
+        <p>Your order №${context.CarOrder.carOrderID} was rejected</p>
         <p>Sincerely yours,</p>
         <p>SAP Workflow Management service</p>
     </body>

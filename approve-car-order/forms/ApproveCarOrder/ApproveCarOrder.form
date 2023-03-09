@@ -15,7 +15,7 @@
                     "id": "car",
                     "type": "string",
                     "label": "Car",
-                    "readOnly": false,
+                    "readOnly": true,
                     "value": "${context.CarOrderCalcFields.car}",
                     "constraints": {
                         "required": false
@@ -25,7 +25,7 @@
                     "id": "office",
                     "type": "string",
                     "label": "Office",
-                    "readOnly": false,
+                    "readOnly": true,
                     "value": "${context.CarOrderCalcFields.office}",
                     "constraints": {
                         "required": false
@@ -35,7 +35,7 @@
                     "id": "rent",
                     "type": "string",
                     "label": "Rent",
-                    "readOnly": false,
+                    "readOnly": true,
                     "value": "${context.CarOrderCalcFields.priceWithCurrencyCode}",
                     "constraints": {
                         "required": false
@@ -45,7 +45,7 @@
                     "id": "quantity",
                     "type": "integer",
                     "label": "Quantity",
-                    "readOnly": false,
+                    "readOnly": true,
                     "value": "${context.CarOrder.quantity}",
                     "constraints": {
                         "required": false
@@ -55,7 +55,7 @@
                     "id": "total_price",
                     "type": "string",
                     "label": "Total Price",
-                    "readOnly": false,
+                    "readOnly": true,
                     "value": "${context.CarOrderCalcFields.totalPriceWithCurrencyCode}",
                     "constraints": {
                         "required": false
@@ -65,8 +65,18 @@
                     "id": "total_local_price",
                     "type": "string",
                     "label": "Total Local Price",
-                    "readOnly": false,
+                    "readOnly": true,
                     "value": "${context.CarOrderCalcFields.totalLocalPriceWithLocalCurrencyCode}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "tier",
+                    "type": "string",
+                    "label": "Tier",
+                    "readOnly": true,
+                    "value": "${context.businessResponse.Result[0].Output.Tier}",
                     "constraints": {
                         "required": false
                     }

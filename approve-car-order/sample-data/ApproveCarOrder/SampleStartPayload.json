@@ -5,6 +5,7 @@
     },
     "CarOrder": {
         "orderUUID": "0640bc67-f03d-4a85-ae9f-ebb99b4e5520",
+        "clientUUID": "32ca5208-698d-4d7a-1524-003ef21b6347",
         "make": "Toyota",
         "model": "Corolla",
         "officeCity": "Houston",

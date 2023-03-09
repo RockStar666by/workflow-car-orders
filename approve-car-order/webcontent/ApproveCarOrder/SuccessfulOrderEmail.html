@@ -16,8 +16,9 @@
     </head>
     <body>
         <h3>Car order successful</h3>
-        <p>Dear ${context.initiatorName},</p>
-        <p>Your order is successful</p>
+        <p>Dear ${context.Client.value[0].firstName} ${context.Client.value[0].lastName},</p>
+        <p>Your order №${context.CarOrder.carOrderID} is successful</p>
+        <p>Total payment is ${context.CarOrder.totalLocal} ${context.CarOrder.LocalCurrencyCode_code}</p>
         <p>Sincerely yours,</p>
         <p>SAP Workflow Management service</p>
     </body>
